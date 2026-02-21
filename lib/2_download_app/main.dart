@@ -26,25 +26,31 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: Scaffold(
-        body: _pages[_currentIndex],
-
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          selectedItemColor: currentThemeColor.color,
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Downloads'),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Settings',
-            ),
-          ],
-        ),
+      home:ListenableBuilder(
+        listenable: themeColorProvider,
+        builder: (context, child) {
+           return Scaffold(
+          body: _pages[_currentIndex],
+        
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            selectedItemColor: themeColorProvider.currentThemeColor.color,
+            items: [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Downloads'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: 'Settings',
+              ),
+            ],
+          ),
+        );
+        },
+       
       ),
     );
   }
